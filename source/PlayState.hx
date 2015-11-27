@@ -24,11 +24,36 @@ class PlayState extends FlxState
   private var right_spots:Array<Spot>;
   private var left_current:Spot;
   private var right_current:Spot;
+  private var left_score:FlxText;
+  private var right_score:FlxText;
+
+  private var _player_1_score:Int;
+  private var player_1_score(get,set):Int;
+  private inline function get_player_1_score():Int{
+    return this._player_1_score;
+  }
+  private inline function set_player_1_score(score:Int):Int{
+    this._player_1_score = score;
+    left_score.text = Std.string(this._player_1_score);
+    return this._player_1_score;
+  }
+
+  private var _player_2_score:Int;
+  private var player_2_score(get,set):Int;
+  private inline function get_player_2_score():Int{
+    return this._player_2_score;
+  }
+  private inline function set_player_2_score(score:Int):Int{
+    this._player_2_score = score;
+    left_score.text = Std.string(this._player_2_score);
+    return this._player_2_score;
+  }
 
   public function new(num_players){
     this.num_players = num_players;
     this.left_spots = new Array<Spot>();
     this.right_spots = new Array<Spot>();
+    this._player_1_score = this._player_2_score = 0;
 
     super();
   }
@@ -38,15 +63,23 @@ class PlayState extends FlxState
 	 */
 	override public function create():Void
 	{
-    // add(new FlxText(400, 300, 800, "Play State", 26));
-    // add(new FlxText(400, 350, 800, '${this.num_players} Players', 26));
+    add(new FlxText(400, 300, 800, "Play State", 26));
+    add(new FlxText(400, 350, 800, '${this.num_players} Players', 26));
 
+    this.left_score = new FlxText(270, 300, 200, "0", 26);
+    this.left_score.setFormat(null, 20, 0x000000);
+    add(this.left_score);
+    if(this.num_players == 2){
+      this.right_score = new FlxText(800, 300, 200, "0", 26);
+      this.right_score.setFormat(null, 20, 0x000000);
+      add(this.right_score);
+    }
 
     // setup four spots on left
     for(i in 0...4){
       var new_spot = new Spot(SpotSide.LEFT);
-      new_spot.x = ( 100*i ) + 30;
-      new_spot.y = 300;
+      new_spot.x = ( 70*i ) + 100;
+      new_spot.y = 500;
       this.left_spots.push(new_spot);
       add(new_spot);
     }
@@ -54,21 +87,21 @@ class PlayState extends FlxState
     // setup four spots on right
     for(i in 0...4){
       var new_spot = new Spot(SpotSide.RIGHT);
-      new_spot.x = ( 100*i ) + 450;
-      new_spot.y = 300;
+      new_spot.x = ( 70*i ) + 500;
+      new_spot.y = 500;
       this.right_spots.push(new_spot);
       add(new_spot);
     }
 
     // setup the left and right current spots
     left_current = new Spot(SpotSide.LEFT);
-    left_current.x = 10;
-    left_current.y = -100;
+    left_current.x = 90;
+    left_current.y = 90;
     add(left_current);
 
     right_current = new Spot(SpotSide.RIGHT);
-    right_current.x = 800;
-    right_current.y = -100;
+    right_current.x = 890;
+    right_current.y = 90;
     add(right_current);
 
     new FlxTimer(INITIAL_DELAY, tick, 1);
@@ -130,7 +163,6 @@ class PlayState extends FlxState
     // randomize all spots
     for(spot in left_spots.concat(right_spots)){
       spot.content = EnumTools.createByIndex(SpotContent, FlxRandom.intRanged(0, contents.length-1));
-      trace(spot.content);
     }
 
   }
@@ -149,20 +181,34 @@ class PlayState extends FlxState
       if(spot.content == left_current.content){
         // good
         next_delay = GOOD_NEXT_DELAY;
+        playerScore(1, 1);
       }else{
         // bad
         next_delay = BAD_NEXT_DELAY;
+        playerScore(1, -5);
       }
     }else if(spot.side == SpotSide.RIGHT){
       if(spot.content == right_current.content){
         // good
         next_delay = GOOD_NEXT_DELAY;
+        playerScore(2, 1);
       }else{
         // bad
         next_delay = BAD_NEXT_DELAY;
+        playerScore(2, -5);
       }
     }
 
     new FlxTimer(next_delay, tick, 1);
+  }
+
+  // if only one player, player_num is always 1
+  private inline function playerScore(player_num:Int, points:Int){
+    if(this.num_players == 1) player_num = 1;
+    if(player_num == 1){
+      player_1_score += points;
+    }else{
+      player_2_score += points;
+    }
   }
 }
