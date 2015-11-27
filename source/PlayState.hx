@@ -22,6 +22,8 @@ class PlayState extends FlxState
   private var right_spots:Array<Spot>;
   private var left_current:Spot;
   private var right_current:Spot;
+  private var left_pot:Pot;
+  private var right_pot:Pot;
 
   public function new(num_players){
     this.num_players = num_players;
@@ -39,35 +41,74 @@ class PlayState extends FlxState
     // add(new FlxText(400, 300, 800, "Play State", 26));
     // add(new FlxText(400, 350, 800, '${this.num_players} Players', 26));
 
-
     // setup four spots on left
     for(i in 0...4){
       var new_spot = new Spot(SpotSide.LEFT);
+      var pot = new Pot();
+      var pot_back = new FlxSprite().loadGraphic("assets/images/pot-back.png");
+      pot_back.scale.set(0.5,0.5);
+      pot_back.x = ( 100*i ) + 30;
+      pot_back.y = 310;
       new_spot.x = ( 100*i ) + 30;
       new_spot.y = 300;
+      pot.x = ( 100*i ) + 30;
+      pot.y = 310;
       this.left_spots.push(new_spot);
+      add(pot_back);
       add(new_spot);
+      add(pot);
     }
-
     // setup four spots on right
     for(i in 0...4){
       var new_spot = new Spot(SpotSide.RIGHT);
+      var pot = new Pot();
+      var pot_back = new FlxSprite().loadGraphic("assets/images/pot-back.png");
+      pot_back.scale.set(0.5,0.5);
+      pot_back.x = ( 100*i ) + 450;
+      pot_back.y = 310;
       new_spot.x = ( 100*i ) + 450;
       new_spot.y = 300;
+      pot.x = ( 100*i ) + 450;
+      pot.y = 310;
       this.right_spots.push(new_spot);
+      add(pot_back);
       add(new_spot);
+      add(pot);
     }
 
     // setup the left and right current spots
+
+    var left_pot_b = new FlxSprite().loadGraphic("assets/images/pot-back.png");
+    left_pot_b.scale.set(0.5,0.5);
+    left_pot_b.x = 10;
+    left_pot_b.y = -100;
+    add(left_pot_b);
+
     left_current = new Spot(SpotSide.LEFT);
     left_current.x = 10;
     left_current.y = -100;
     add(left_current);
 
+    left_pot = new Pot();
+    left_pot.x = 10;
+    left_pot.y = -100;
+    add(left_pot);
+
+    var right_pot_b = new FlxSprite().loadGraphic("assets/images/pot-back.png");
+    right_pot_b.scale.set(0.5,0.5);
+    right_pot_b.x = 800;
+    right_pot_b.y = -100;
+    add(right_pot_b);
+
     right_current = new Spot(SpotSide.RIGHT);
     right_current.x = 800;
     right_current.y = -100;
     add(right_current);
+
+    right_pot = new Pot();
+    right_pot.x = 800;
+    right_pot.y = -100;
+    add(right_pot);
 
     new FlxTimer(INITIAL_DELAY, tick, 1);
 
@@ -128,7 +169,6 @@ class PlayState extends FlxState
     // randomize all spots
     for(spot in left_spots.concat(right_spots)){
       spot.content = EnumTools.createByIndex(SpotContent, FlxRandom.intRanged(0, contents.length-1));
-      trace(spot.content);
     }
 
   }
