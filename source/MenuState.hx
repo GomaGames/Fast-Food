@@ -27,16 +27,20 @@ class MenuState extends FlxState
     one_player.updateHitbox();
     add(one_player);
 
-    var two_players = new FlxButton(600, 400, "Two Players", select_two_players);
+    var two_players = new FlxButton(600, 400, "Two Players (coming soon!)", null);
     two_players.setGraphicSize(200);
     two_players.updateHitbox();
     add(two_players);
 
-    one_player.labelOffsets =
-    two_players.labelOffsets = [
+    one_player.labelOffsets = [
       new FlxPoint(55,18),
       new FlxPoint(55,18),
       new FlxPoint(55,18)
+    ];
+    two_players.labelOffsets = [
+      new FlxPoint(55,12),
+      new FlxPoint(55,12),
+      new FlxPoint(55,12)
     ];
 
 		super.create();
