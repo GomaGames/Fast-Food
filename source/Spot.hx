@@ -4,6 +4,7 @@ import flixel.group.FlxSpriteGroup;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import flixel.text.FlxText;
+import flixel.tweens.FlxEase;
 
 using flixel.util.FlxSpriteUtil;
 
@@ -37,6 +38,15 @@ class Spot extends FlxSpriteGroup
       this.label.setFormat(null, 18, 0x000000);
       add(this.label);
     }
+  }
+
+  public function pop_up():Void
+  {
+    var original = this.graphic.y;
+    this.graphic.y += 120;
+    FlxTween.tween(this.graphic, { x: this.graphic.x , y: original }, 0.4, {
+      ease : FlxEase.backOut
+    });
   }
 
   override public function update():Void

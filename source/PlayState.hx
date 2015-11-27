@@ -7,7 +7,6 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.util.FlxTimer;
 import flixel.util.FlxRandom;
-import flixel.tweens.FlxTween;
 
 using Lambda;
 
@@ -27,8 +26,6 @@ class PlayState extends FlxState
   private var right_spots:Array<Spot>;
   private var left_current:Spot;
   private var right_current:Spot;
-  private var left_pot:Pot;
-  private var right_pot:Pot;
   private var left_score:FlxText;
   private var right_score:FlxText;
 
@@ -84,54 +81,30 @@ class PlayState extends FlxState
     for(i in 0...4){
       var new_spot = new Spot(SpotSide.LEFT, LEFT_KEYS[i]);
       new_spot.x = ( 100*i ) + 30;
-      new_spot.y = 420;
+      new_spot.y = 220;
       this.left_spots.push(new_spot);
-      FlxTween.tween(new_spot, { x: new_spot.x , y: new_spot.y -120 }, 6);
       add(new_spot);
     }
     // setup four spots on right
     for(i in 0...4){
       var new_spot = new Spot(SpotSide.RIGHT, RIGHT_KEYS[i]);
       new_spot.x = ( 100*i ) + 450;
-      new_spot.y = 420;
+      new_spot.y = 220;
       this.right_spots.push(new_spot);
-      FlxTween.tween(new_spot, { x: new_spot.x , y: new_spot.y -120 }, 6);
       add(new_spot);
     }
 
     // setup the left and right current spots
-
-    var left_pot_b = new FlxSprite().loadGraphic("assets/images/pot-back.png");
-    left_pot_b.scale.set(0.5,0.5);
-    left_pot_b.x = 10;
-    left_pot_b.y = -100;
-    add(left_pot_b);
 
     left_current = new Spot(SpotSide.LEFT);
     left_current.x = 10;
     left_current.y = -110;
     add(left_current);
 
-    left_pot = new Pot();
-    left_pot.x = 10;
-    left_pot.y = -100;
-    add(left_pot);
-
-    var right_pot_b = new FlxSprite().loadGraphic("assets/images/pot-back.png");
-    right_pot_b.scale.set(0.5,0.5);
-    right_pot_b.x = 800;
-    right_pot_b.y = -100;
-    add(right_pot_b);
-
     right_current = new Spot(SpotSide.RIGHT);
     right_current.x = 800;
     right_current.y = -110;
     add(right_current);
-
-    right_pot = new Pot();
-    right_pot.x = 800;
-    right_pot.y = -100;
-    add(right_pot);
 
     new FlxTimer(INITIAL_DELAY, tick, 1);
 
@@ -225,6 +198,11 @@ class PlayState extends FlxState
       return spot.content != SpotContent.NONE;
     });
     right_current.content = right_not_empty_contents[ FlxRandom.intRanged(0, right_not_empty_contents.length-1) ].content;
+
+
+    for(spot in left_spots.concat(right_spots)){
+      spot.pop_up();
+    }
 
   }
 
