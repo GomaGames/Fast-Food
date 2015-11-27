@@ -1,9 +1,12 @@
+import haxe.EnumTools;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
+import flixel.util.FlxTimer;
+import flixel.util.FlxRandom;
 
 using Lambda;
 
@@ -12,6 +15,8 @@ using Lambda;
  */
 class PlayState extends FlxState
 {
+  private static inline var INITIAL_DELAY = 3.0; // 3 seconds at start of match
+
   private var num_players:Int;
   private var left_spots:Array<Spot>;
   private var right_spots:Array<Spot>;
@@ -64,6 +69,7 @@ class PlayState extends FlxState
     right_current.y = 90;
     add(right_current);
 
+    new FlxTimer(INITIAL_DELAY, tick, 1);
 
 		super.create();
 	}
@@ -111,6 +117,20 @@ class PlayState extends FlxState
 		super.update();
 	}
 
+  private inline function tick(timer:FlxTimer):Void
+  {
+    var contents = EnumTools.getConstructors(SpotContent);
+
+    // randomize current spots
+    left_current.content = EnumTools.createByIndex(SpotContent, FlxRandom.intRanged(1, contents.length-1));
+    right_current.content = EnumTools.createByIndex(SpotContent, FlxRandom.intRanged(1, contents.length-1));
+
+    // randomize all spots
+    for(spot in left_spots.concat(right_spots)){
+      spot.content = EnumTools.createByIndex(SpotContent, FlxRandom.intRanged(0, contents.length-1));
+    }
+
+  }
 
   private inline function whack( spot:Spot ):Void
   {
@@ -118,5 +138,22 @@ class PlayState extends FlxState
       evaluate points depending on num_players game type
     */
 
+    if(spot.side == SpotSide.LEFT){
+      if(spot.content == left_current.content){
+        // good
+
+      }else{
+        // bad
+
+      }
+    }else if(spot.side == SpotSide.RIGHT){
+      if(spot.content == right_current.content){
+        // good
+
+      }else{
+        // bad
+
+      }
+    }
   }
 }
