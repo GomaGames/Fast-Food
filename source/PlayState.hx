@@ -7,6 +7,7 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.util.FlxTimer;
 import flixel.util.FlxRandom;
+import flixel.tweens.FlxTween;
 
 using Lambda;
 
@@ -88,10 +89,11 @@ class PlayState extends FlxState
       pot_back.x = ( 100*i ) + 30;
       pot_back.y = 310;
       new_spot.x = ( 100*i ) + 30;
-      new_spot.y = 300;
+      new_spot.y = 420;
       pot.x = ( 100*i ) + 30;
       pot.y = 310;
       this.left_spots.push(new_spot);
+      FlxTween.tween(new_spot, { x: new_spot.x , y: new_spot.y -120 }, 6);
       add(pot_back);
       add(new_spot);
       add(pot);
@@ -105,10 +107,11 @@ class PlayState extends FlxState
       pot_back.x = ( 100*i ) + 450;
       pot_back.y = 310;
       new_spot.x = ( 100*i ) + 450;
-      new_spot.y = 300;
+      new_spot.y = 420;
       pot.x = ( 100*i ) + 450;
       pot.y = 310;
       this.right_spots.push(new_spot);
+      FlxTween.tween(new_spot, { x: new_spot.x , y: new_spot.y -120 }, 6);
       add(pot_back);
       add(new_spot);
       add(pot);
