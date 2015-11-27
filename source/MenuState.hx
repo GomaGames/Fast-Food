@@ -19,6 +19,7 @@ class MenuState extends FlxState
 	 */
 	override public function create():Void
 	{
+    bgColor = 0xffffffff;
     add(new FlxText(400, 300, 800, "Fast Food", 26));
 
     var one_player = new FlxButton(200, 400, "One Player", select_one_player);

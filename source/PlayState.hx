@@ -38,15 +38,15 @@ class PlayState extends FlxState
 	 */
 	override public function create():Void
 	{
-    add(new FlxText(400, 300, 800, "Play State", 26));
-    add(new FlxText(400, 350, 800, '${this.num_players} Players', 26));
+    // add(new FlxText(400, 300, 800, "Play State", 26));
+    // add(new FlxText(400, 350, 800, '${this.num_players} Players', 26));
 
 
     // setup four spots on left
     for(i in 0...4){
       var new_spot = new Spot(SpotSide.LEFT);
-      new_spot.x = ( 70*i ) + 100;
-      new_spot.y = 500;
+      new_spot.x = ( 100*i ) + 30;
+      new_spot.y = 300;
       this.left_spots.push(new_spot);
       add(new_spot);
     }
@@ -54,21 +54,21 @@ class PlayState extends FlxState
     // setup four spots on right
     for(i in 0...4){
       var new_spot = new Spot(SpotSide.RIGHT);
-      new_spot.x = ( 70*i ) + 500;
-      new_spot.y = 500;
+      new_spot.x = ( 100*i ) + 450;
+      new_spot.y = 300;
       this.right_spots.push(new_spot);
       add(new_spot);
     }
 
     // setup the left and right current spots
     left_current = new Spot(SpotSide.LEFT);
-    left_current.x = 90;
-    left_current.y = 90;
+    left_current.x = 10;
+    left_current.y = -100;
     add(left_current);
 
     right_current = new Spot(SpotSide.RIGHT);
-    right_current.x = 890;
-    right_current.y = 90;
+    right_current.x = 800;
+    right_current.y = -100;
     add(right_current);
 
     new FlxTimer(INITIAL_DELAY, tick, 1);
@@ -130,6 +130,7 @@ class PlayState extends FlxState
     // randomize all spots
     for(spot in left_spots.concat(right_spots)){
       spot.content = EnumTools.createByIndex(SpotContent, FlxRandom.intRanged(0, contents.length-1));
+      trace(spot.content);
     }
 
   }
