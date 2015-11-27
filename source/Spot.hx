@@ -16,13 +16,7 @@ class Spot extends FlxSprite
     this.content = SpotContent.NONE;
     super();
 
-    // this.makeGraphic(50, 20, FlxColor.TRANSPARENT, true);
-    this.loadGraphic( "assets/images/pot-back.png" ).scale.set(0.5, 0.5);
-    // this.drawEllipse(100, 370, 100, 30, 0xFF889922, null, { color: 0xFF889922, alpha: 1 });
-    // var pot = new FlxSprite().loadGraphic("assets/images/pot-front.png");
-    // pot.x = 300;
-    // pot.y = 300;
-    // this.tween = FlxTween.tween(this, { x: this.x , y: this.y -10 }, 2);
+    this.loadGraphic( "assets/images/blank.png" ).scale.set(0.5, 0.5);
 
   }
 
