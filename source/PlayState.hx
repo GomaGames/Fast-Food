@@ -83,38 +83,20 @@ class PlayState extends FlxState
     // setup four spots on left
     for(i in 0...4){
       var new_spot = new Spot(SpotSide.LEFT, LEFT_KEYS[i]);
-      var pot = new Pot();
-      var pot_back = new FlxSprite().loadGraphic("assets/images/pot-back.png");
-      pot_back.scale.set(0.5,0.5);
-      pot_back.x = ( 100*i ) + 30;
-      pot_back.y = 310;
       new_spot.x = ( 100*i ) + 30;
       new_spot.y = 420;
-      pot.x = ( 100*i ) + 30;
-      pot.y = 310;
       this.left_spots.push(new_spot);
       FlxTween.tween(new_spot, { x: new_spot.x , y: new_spot.y -120 }, 6);
-      add(pot_back);
       add(new_spot);
-      add(pot);
     }
     // setup four spots on right
     for(i in 0...4){
       var new_spot = new Spot(SpotSide.RIGHT, RIGHT_KEYS[i]);
-      var pot = new Pot();
-      var pot_back = new FlxSprite().loadGraphic("assets/images/pot-back.png");
-      pot_back.scale.set(0.5,0.5);
-      pot_back.x = ( 100*i ) + 450;
-      pot_back.y = 310;
       new_spot.x = ( 100*i ) + 450;
       new_spot.y = 420;
-      pot.x = ( 100*i ) + 450;
-      pot.y = 310;
       this.right_spots.push(new_spot);
       FlxTween.tween(new_spot, { x: new_spot.x , y: new_spot.y -120 }, 6);
-      add(pot_back);
       add(new_spot);
-      add(pot);
     }
 
     // setup the left and right current spots
