@@ -194,18 +194,50 @@ class PlayState extends FlxState
 		super.update();
 	}
 
+  /*
+    a set must be random, with at least one != NONE
+    a current must be a random one of the set it belongs to
+  */
   private inline function tick(timer:FlxTimer):Void
   {
     var contents = EnumTools.getConstructors(SpotContent);
 
-    // randomize current spots
-    left_current.content = EnumTools.createByIndex(SpotContent, FlxRandom.intRanged(1, contents.length-1));
-    right_current.content = EnumTools.createByIndex(SpotContent, FlxRandom.intRanged(1, contents.length-1));
-
-    // randomize all spots
+    // empty spots first
     for(spot in left_spots.concat(right_spots)){
-      spot.content = EnumTools.createByIndex(SpotContent, FlxRandom.intRanged(0, contents.length-1));
+      spot.content = SpotContent.NONE;
     }
+
+    // randomize all spots, until there's at least one content
+    while(
+        !left_spots.fold(function(spot, has_content){
+          return has_content || spot.content != SpotContent.NONE;
+        }, false)
+    ){
+      for(spot in left_spots){
+        spot.content = EnumTools.createByIndex(SpotContent, FlxRandom.intRanged(0, contents.length-1));
+      }
+    }
+    ////////////////////////////// ^^ Left ^^  vv Right vv
+    while(
+        !right_spots.fold(function(spot, has_content){
+          return has_content || spot.content != SpotContent.NONE;
+        }, false)
+    ){
+      for(spot in right_spots){
+        spot.content = EnumTools.createByIndex(SpotContent, FlxRandom.intRanged(0, contents.length-1));
+      }
+    }
+
+    // randomize current spots
+    var left_not_empty_contents = left_spots.filter(function(spot){
+      return spot.content != SpotContent.NONE;
+    });
+    left_current.content = left_not_empty_contents[ FlxRandom.intRanged(0, left_not_empty_contents.length-1) ].content;
+
+    var right_not_empty_contents = right_spots.filter(function(spot){
+      return spot.content != SpotContent.NONE;
+    });
+    right_current.content = right_not_empty_contents[ FlxRandom.intRanged(0, right_not_empty_contents.length-1) ].content;
 
   }
 
