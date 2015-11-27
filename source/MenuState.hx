@@ -6,6 +6,8 @@ import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
+import flixel.plugin.MouseEventManager;
+import flixel.util.FlxPoint;
 
 /**
  * A FlxState which can be used for the game's menu.
@@ -17,9 +19,37 @@ class MenuState extends FlxState
 	 */
 	override public function create():Void
 	{
-    add(new FlxText(0, 0, 100, "Fast Food"));
+    add(new FlxText(400, 300, 800, "Fast Food", 26));
+
+    var one_player = new FlxButton(200, 400, "One Player", select_one_player);
+    one_player.setGraphicSize(200);
+    one_player.updateHitbox();
+    add(one_player);
+
+    var two_players = new FlxButton(600, 400, "Two Players", select_two_players);
+    two_players.setGraphicSize(200);
+    two_players.updateHitbox();
+    add(two_players);
+
+    one_player.labelOffsets =
+    two_players.labelOffsets = [
+      new FlxPoint(55,18),
+      new FlxPoint(55,18),
+      new FlxPoint(55,18)
+    ];
+
 		super.create();
 	}
+
+  private function select_one_player():Void
+  {
+    FlxG.switchState(new PlayState(1));
+  }
+
+  private function select_two_players():Void
+  {
+    FlxG.switchState(new PlayState(2));
+  }
 
 	/**
 	 * Function that is called when this state is destroyed - you might want to

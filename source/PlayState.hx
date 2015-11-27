@@ -12,16 +12,25 @@ import flixel.util.FlxMath;
  */
 class PlayState extends FlxState
 {
+  private var num_players:Int;
+
+  public function new(num_players){
+    this.num_players = num_players;
+    super();
+  }
+
 	/**
-	 * Function that is called up when to state is created to set it up. 
+	 * Function that is called up when to state is created to set it up.
 	 */
 	override public function create():Void
 	{
+    add(new FlxText(400, 300, 800, "Play State", 26));
+    add(new FlxText(400, 350, 800, '${this.num_players} Players', 26));
 		super.create();
 	}
-	
+
 	/**
-	 * Function that is called when this state is destroyed - you might want to 
+	 * Function that is called when this state is destroyed - you might want to
 	 * consider setting all objects this state uses to null to help garbage collection.
 	 */
 	override public function destroy():Void
@@ -35,5 +44,5 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		super.update();
-	}	
+	}
 }
