@@ -18,6 +18,8 @@ class PlayState extends FlxState
   private static inline var INITIAL_DELAY = 3.0; // 3 seconds at start of match
   private static inline var GOOD_NEXT_DELAY = 0.5; // in seconds
   private static inline var BAD_NEXT_DELAY = 1.75; // in seconds
+  private static var LEFT_KEYS = ["A","S","D","F"];
+  private static var RIGHT_KEYS = ["J","K","L",";"];
 
   private var num_players:Int;
   private var left_spots:Array<Spot>;
@@ -79,7 +81,7 @@ class PlayState extends FlxState
 
     // setup four spots on left
     for(i in 0...4){
-      var new_spot = new Spot(SpotSide.LEFT);
+      var new_spot = new Spot(SpotSide.LEFT, LEFT_KEYS[i]);
       var pot = new Pot();
       var pot_back = new FlxSprite().loadGraphic("assets/images/pot-back.png");
       pot_back.scale.set(0.5,0.5);
@@ -96,7 +98,7 @@ class PlayState extends FlxState
     }
     // setup four spots on right
     for(i in 0...4){
-      var new_spot = new Spot(SpotSide.RIGHT);
+      var new_spot = new Spot(SpotSide.RIGHT, RIGHT_KEYS[i]);
       var pot = new Pot();
       var pot_back = new FlxSprite().loadGraphic("assets/images/pot-back.png");
       pot_back.scale.set(0.5,0.5);
