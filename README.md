@@ -67,6 +67,10 @@ to build and test on the selected target, run the command `:make`
 _TODO_
 
 
-## HaxeFlixel
+## HaxeFlixel Help
 
 [HaxeFlixel Handbook](http://haxeflixel.com/documentation/haxeflixel-handbook/)
+[HaxeFlixel API](http://api.haxeflixel.com/)
+[HaxeFlixel CheatSheet](http://haxeflixel.com/documentation/cheat-sheet/)
+[AdamAtomic's CheatSheet](https://github.com/AdamAtomic/flixel/wiki/Flixel-Cheat-Sheet-1:-The-Basics)
+[Waaay more stuff!](https://github.com/AdamAtomic/flixel/wiki)
