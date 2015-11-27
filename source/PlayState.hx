@@ -15,6 +15,8 @@ class PlayState extends FlxState
   private var num_players:Int;
   private var left_spots:Array<Spot>;
   private var right_spots:Array<Spot>;
+  private var left_current:Spot;
+  private var right_current:Spot;
 
   public function new(num_players){
     this.num_players = num_players;
@@ -51,6 +53,18 @@ class PlayState extends FlxState
       add(new_spot);
     }
 
+    // setup the left and right current spots
+    left_current = new Spot(SpotSide.LEFT);
+    left_current.x = 90;
+    left_current.y = 90;
+    add(left_current);
+
+    right_current = new Spot(SpotSide.RIGHT);
+    right_current.x = 890;
+    right_current.y = 90;
+    add(right_current);
+
+
 		super.create();
 	}
 
@@ -68,6 +82,41 @@ class PlayState extends FlxState
 	 */
 	override public function update():Void
 	{
+
+    /*
+      main game logic here
+
+      pressing any of the keys will "whack"
+        determine:
+          - what was at that position
+          - then evaluate result
+          - then bring up the next set
+            - if last was right, go fast
+            - if last was wrong, bring up next set slowly
+
+    */
+
+    if (FlxG.keys.justPressed.A) { whack(left_spots[0]); }
+    if (FlxG.keys.justPressed.S) { whack(left_spots[1]); }
+    if (FlxG.keys.justPressed.D) { whack(left_spots[2]); }
+    if (FlxG.keys.justPressed.F) { whack(left_spots[3]); }
+
+    ////////////////////////////// ^^ Left ^^  vv Right vv
+
+    if (FlxG.keys.justPressed.J) { whack(right_spots[0]); }
+    if (FlxG.keys.justPressed.K) { whack(right_spots[1]); }
+    if (FlxG.keys.justPressed.L) { whack(right_spots[2]); }
+    if (FlxG.keys.justPressed.SEMICOLON) { whack(right_spots[3]); }
+
 		super.update();
 	}
+
+
+  private inline function whack( spot:Spot ):Void
+  {
+    /*
+      evaluate points depending on num_players game type
+    */
+
+  }
 }

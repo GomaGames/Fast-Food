@@ -7,6 +7,7 @@ using flixel.util.FlxSpriteUtil;
 class Spot extends FlxSprite
 {
   public var side:SpotSide;
+  public var content:SpotContent; // initially null
 
   public function new(side:SpotSide){
     this.side = side;
