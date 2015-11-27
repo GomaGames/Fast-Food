@@ -16,6 +16,8 @@ using Lambda;
 class PlayState extends FlxState
 {
   private static inline var INITIAL_DELAY = 3.0; // 3 seconds at start of match
+  private static inline var GOOD_NEXT_DELAY = 0.5; // in seconds
+  private static inline var BAD_NEXT_DELAY = 1.75; // in seconds
 
   private var num_players:Int;
   private var left_spots:Array<Spot>;
@@ -136,24 +138,30 @@ class PlayState extends FlxState
   {
     /*
       evaluate points depending on num_players game type
+      - then bring up the next set
+        - if last was right, go fast
+        - if last was wrong, bring up next set slowly
     */
+    var next_delay:Float = 0.0; // in seconds
 
     if(spot.side == SpotSide.LEFT){
       if(spot.content == left_current.content){
         // good
-
+        next_delay = GOOD_NEXT_DELAY;
       }else{
         // bad
-
+        next_delay = BAD_NEXT_DELAY;
       }
     }else if(spot.side == SpotSide.RIGHT){
       if(spot.content == right_current.content){
         // good
-
+        next_delay = GOOD_NEXT_DELAY;
       }else{
         // bad
-
+        next_delay = BAD_NEXT_DELAY;
       }
     }
+
+    new FlxTimer(next_delay, tick, 1);
   }
 }
